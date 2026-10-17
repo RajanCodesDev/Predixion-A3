@@ -1,0 +1,32 @@
+function next_account(now){
+	move due_calls and cooldown expired accounts into queue
+
+	while queue is not empty:
+		account = pop.(highest-priority account)
+
+		if account is already reserved :
+			continue
+
+		if now is outside account's local calling hours:
+			defer account
+			continue
+
+		if attempts_today >= 3
+			skip account
+			continue
+
+		if last_attempt exists and
+			now < last_attempts + 60 minutes
+				defer account 
+				continue
+
+		if callback time exists and now < callback time :
+			defer account
+			continue
+
+		atomically reserve account
+		return account
+	return NONE
+}
+
+// Priority = Days Overdue * Pending Amount
